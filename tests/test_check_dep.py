@@ -62,7 +62,7 @@ def test_time():
         if not perm[0] < perm[1] < perm[2]:
             for i in range(3):
                 os.utime(files[perm[i]])
-                time.sleep(1)
+                time.sleep(.01)
             errdep = check_dep(deps[:1], reterr=True)
             assert errdep is not None
             assert len(errdep) == 1
@@ -73,9 +73,9 @@ def test_time():
     # ---------- Multiple data file
     # Break dependency 1
     os.utime('code1.txt')
-    time.sleep(1)
+    time.sleep(.01)
     os.utime('pre1.txt')
-    time.sleep(1)
+    time.sleep(.01)
     os.utime('post1.txt')
     files = ['pre21.txt', 'pre22.txt', 'code2.txt', 'post21.txt', 'post22.txt']
     perms = list(itertools.permutations(range(5)))
@@ -89,7 +89,7 @@ def test_time():
         ):
             for i in range(5):
                 os.utime(files[perm[i]])
-                time.sleep(1)
+                time.sleep(.01)
             errdep = check_dep(deps, reterr=True)
             assert errdep is not None
             assert len(errdep) == 2

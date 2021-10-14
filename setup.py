@@ -5,7 +5,7 @@ setup(
       version='0.1',
       description='filedep: A small python tool to check file dependency',
       author='Francis Cong',
-      url=''
+      url='https://github.com/flcong/filedep',
       license='MIT',
       packages=['filedep'],
       zip_safe=False
