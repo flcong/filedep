@@ -23,9 +23,9 @@ def print_dep(outdep, outfile):
     """Print dependency"""
     # Max path length
     maxlen = max(
-        max(len(s) for s in outdep[0].keys()),
+        max(len(s) for s in outdep[0].keys()) if len(outdep[0]) > 0 else 0,
         max(len(s) for s in outdep[1].keys()),
-        max(len(s) for s in outdep[2].keys()),
+        max(len(s) for s in outdep[2].keys()) if len(outdep[0]) > 0 else 0,
     ) + 5
     print(' ' * (maxlen + 4 + 2 + 4) + 'Last Modified Time', file=outfile)
     print('  Input:', file=outfile)
@@ -72,8 +72,14 @@ def check_dep_time(deps, outfile):
     # Save problematic dependencies
     errdep = []
     for i in range(ndep):
-        datetime1 = max(get_mtime(x) for x in deps[i][0])
-        datetime3 = min(get_mtime(x) for x in deps[i][2])
+        if len(deps[i][0]) == 0:
+            datetime1 = datetime(1900,1,1)
+        else:
+            datetime1 = max(get_mtime(x) for x in deps[i][0])
+        if len(deps[i][2]) == 0:
+            datetime3 = datetime(2999,1,1)
+        else:
+            datetime3 = min(get_mtime(x) for x in deps[i][2])
         if deps[i][1].strip() != '':
             datetime2 = get_mtime(deps[i][1])
             if not (datetime1 <= datetime2 <= datetime3):
