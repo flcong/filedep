@@ -59,7 +59,7 @@ def test_time():
     files = ['pre1.txt', 'code1.txt', 'post1.txt']
     perms = list(itertools.permutations(range(3)))
     for perm in perms:
-        if not perm[0] < perm[1] < perm[2]:
+        if not max(perm[0], perm[1]) < perm[2]:
             for i in range(3):
                 os.utime(files[perm[i]])
                 time.sleep(.01)
@@ -74,19 +74,13 @@ def test_time():
     # Break dependency 1
     os.utime('code1.txt')
     time.sleep(.01)
-    os.utime('pre1.txt')
-    time.sleep(.01)
     os.utime('post1.txt')
+    time.sleep(.01)
+    os.utime('pre1.txt')
     files = ['pre21.txt', 'pre22.txt', 'code2.txt', 'post21.txt', 'post22.txt']
     perms = list(itertools.permutations(range(5)))
     for perm in perms:
-        if not (
-            perm[2] == 2 and
-            ((perm[0] == 0 and perm[1] == 1) or
-             (perm[0] == 1 and perm[1] == 0)) and
-            ((perm[3] == 3 and perm[4] == 4) or
-             (perm[3] == 4 and perm[4] == 3))
-        ):
+        if not (max(perm[0], perm[1], perm[2]) <= min(perm[3], perm[4])):
             for i in range(5):
                 os.utime(files[perm[i]])
                 time.sleep(.01)

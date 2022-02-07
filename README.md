@@ -13,7 +13,7 @@ dependency.
   the data cleaning procedure a bit, so you modify `code.py`. 
   
 * If there are only one code file and two data files, you will easily remember to
-re-run `code.py` to update the output data `outdata.csv`. 
+  re-run `code.py` to update the output data `outdata.csv`. 
   
 * However, suppose that `outdata.csv` is then used by `code2.py` to write 
   `finaldata.csv`. Then, people may easily forget to re-run `code2.py` as well
@@ -214,8 +214,8 @@ should be as follows:
     - The first element is a list of `str`.
     - The second element is a `str`.
     - The third element is a list of `str`.
-    - Each `str` is an absolute path of a existing file.
-  
+    - Each `str` is an absolute path of an existing file.
+
 As an example, the following code defines two dependencies:
 ```python
 deps = [
@@ -229,11 +229,10 @@ deps = [
 ```
 * The first one says that `code1.py` uses `pre1.txt` as input and outputs 
 `post1.txt`. As a result, the last modified date of the three files
-should satisfy `pre1.txt<=code1.py<=post1.txt`.
+should satisfy `pre1.txt<=post1.txt` and  `code1.py<=post1.txt`.
 * The second one says that `code2.py` uses `pre21.txt` and `pre22.txt` as input
   and outputs `post21.txt` and `post22.txt`. As a result, the last modified date
   of the three files should satisfy 
-  `max(pre21.txt,pre22.txt)<=code1.py<=min(post21.txt,post22.txt)` where `max`
+  `max(pre21.txt,pre22.txt,code1.py)<=min(post21.txt,post22.txt)` where `max`
   (`min`) represent the maximum (minimum) date.
-
 

@@ -82,7 +82,7 @@ def check_dep_time(deps, outfile):
             datetime3 = min(get_mtime(x) for x in deps[i][2])
         if deps[i][1].strip() != '':
             datetime2 = get_mtime(deps[i][1])
-            if not (datetime1 <= datetime2 <= datetime3):
+            if not (max(datetime1, datetime2) <= datetime3):
                 failed = True
             else:
                 failed = False
